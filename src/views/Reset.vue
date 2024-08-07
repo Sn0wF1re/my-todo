@@ -12,8 +12,10 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '../lib/supabaseClient';
+import { useRouter } from 'vue-router';
 
 const email = ref('');
+const router = useRouter();
 
 const handleReset = async () => {
     try {
@@ -22,9 +24,10 @@ const handleReset = async () => {
         })
 
         if (error) {
-            console.log(error.message)
+            console.log(error.message);
         } else {
-            console.log('data:', data)
+            console.log('data:', data);
+            router.push('/login');
         }
     } catch (error) {
         console.log('Error encountered while resetting password:', error);
