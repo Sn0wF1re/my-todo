@@ -35,8 +35,8 @@ const handleRegistration = async () => {
             options: {
                 emailRedirectTo: 'http://localhost:5173/login',
                 data: {
-                    first_name: firstName.value,
-                    last_name: lastName.value
+                    first_name: firstName.value.charAt(0).toUpperCase() + firstName.value.slice(1).toLowerCase(),
+                    last_name: lastName.value.charAt(0).toUpperCase() + lastName.value.slice(1).toLowerCase()
                 }
             }
         })
