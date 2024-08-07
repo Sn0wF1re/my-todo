@@ -70,7 +70,7 @@ onMounted(async () => {
     }
 
     .pending {
-        background-color: yellow;
+        background-color: yellowgreen;
     }
 
     .fav {
@@ -100,6 +100,7 @@ onMounted(async () => {
 
     button {
         padding: 0.5rem 1rem;
+        background-color: blue;
     }
 }
 
@@ -109,5 +110,6 @@ onMounted(async () => {
 
 button {
     margin: 0 0.5rem;
+    color: #242424;
 }
 </style>
