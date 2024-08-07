@@ -12,8 +12,10 @@
 <script setup>
 import { ref } from 'vue';
 import { supabase } from '../lib/supabaseClient';
+import { useRouter } from 'vue-router';
 
 const newPassword = ref('');
+const router = useRouter();
 
 const handleUpdate = async () => {
     try {
@@ -23,9 +25,10 @@ const handleUpdate = async () => {
 
 
         if (error) {
-            console.log(error.message)
+            console.log(error.message);
         } else {
-            console.log('data:', data)
+            console.log('data:', data);
+            router.push('/login');
         }
     } catch (error) {
         console.log('Error encountered while updating password:', error);
