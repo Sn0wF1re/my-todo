@@ -59,7 +59,6 @@ export const useTaskStore = defineStore('taskStore', () => {
                 console.error('Error fetching tasks', error);
             } else {
                 tasks.value = data;
-                console.log('tasks', tasks.value);
             }
         } catch (error) {
             console.error('Error fetching tasks', error);
@@ -93,7 +92,6 @@ export const useTaskStore = defineStore('taskStore', () => {
                 console.error('Error toggling fav', error);
             } else {
                 fetchTasks();
-                console.log('Task status after toggle:',updatedStatus);
             }
         } catch (error) {
             console.error('Error toggling fav', error);
@@ -112,7 +110,6 @@ export const useTaskStore = defineStore('taskStore', () => {
                 console.error('Error marking task as done', error);
             }else {
                 fetchTasks();
-                console.log('Task status after completed toggle:', updatedStatus);
             }
         } catch (error) {
             console.error('Error marking task as done', error);
