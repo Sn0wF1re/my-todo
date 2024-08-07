@@ -83,7 +83,6 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     const toggleFav = async (task) => {
         try {
-            console.log(`${task.task_description} status before toggle: ${task.favorite}`);
             const updatedStatus = !task.favorite;
             const { error } = await supabase
               .from('tasks')
@@ -103,7 +102,6 @@ export const useTaskStore = defineStore('taskStore', () => {
 
     const toggleComplete = async (task) => {
         try {
-            console.log(`${task.task_description} status before completed toggle: ${task.completed}`);
             const updatedStatus = !task.completed;
             const { error } = await supabase
               .from('tasks')
