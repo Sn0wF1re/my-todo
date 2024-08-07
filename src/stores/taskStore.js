@@ -25,18 +25,22 @@ export const useTaskStore = defineStore('taskStore', () => {
     const createTask = async (task_description) => {
         try {
             await initializeUserId();
-            const { data, error } = await supabase
-              .from('tasks')
-              .insert(
-                  { task_description: task_description, user_id: user_id.value },
-              )
-              .select();
-
-              if (error) {
-                alert('Error creating task');
-              } else {
-                alert('Task created successfully');
-              }
+            if (task_description !== '' && task_description !== null && task_description !== undefined && task_description.length > 5) {
+                const { data, error } = await supabase
+                  .from('tasks')
+                  .insert(
+                      { task_description: task_description, user_id: user_id.value },
+                  )
+                  .select();
+    
+                  if (error) {
+                    alert('Error creating task');
+                  } else {
+                    alert('Task created successfully');
+                  }
+            } else {
+                alert('Task description is too short');
+            }
         } catch (error) {
             console.error('Error creating task', error);
         }
