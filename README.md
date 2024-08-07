@@ -31,5 +31,5 @@ The project can be used to keep track of tasks. You can add tasks and filter exi
 - Task filtering by status (complete, favorite, pending)
 
 ## Contact Information
-- (Github)[https://github.com/Sn0wF1re]
-- (Telegram)[t.me/Sn0wF1re]
+- [Github](https://github.com/Sn0wF1re)
+- [Telegram](t.me/Sn0wF1re)
