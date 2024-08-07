@@ -36,6 +36,7 @@ export const useTaskStore = defineStore('taskStore', () => {
                   if (error) {
                     alert('Error creating task');
                   } else {
+                    fetchTasks();
                     alert('Task created successfully');
                   }
             } else {
@@ -72,6 +73,7 @@ export const useTaskStore = defineStore('taskStore', () => {
               .delete()
               .eq('id', id);
             if (!response.error) {
+                fetchTasks();
                 alert('Task deleted successfully');
             }
         } catch (error) {
@@ -91,6 +93,7 @@ export const useTaskStore = defineStore('taskStore', () => {
             if (error) {
                 console.error('Error toggling fav', error);
             } else {
+                fetchTasks();
                 console.log('Task status after toggle:',updatedStatus);
             }
         } catch (error) {
@@ -110,6 +113,7 @@ export const useTaskStore = defineStore('taskStore', () => {
             if (error) {
                 console.error('Error marking task as done', error);
             }else {
+                fetchTasks();
                 console.log('Task status after completed toggle:', updatedStatus);
             }
         } catch (error) {
