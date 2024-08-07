@@ -8,7 +8,6 @@
         <button @click="setFilterType('favorites')" class="fav">Favorites</button>
         <button @click="setFilterType('completed')" class="complete">Completed</button>
         <button @click="setFilterType('pending')" class="pending">pending</button>
-        <!-- <p>{{ taskStore.user_id }}</p> -->
     </div>
 
     <div class="add-task" v-if="showForm">
