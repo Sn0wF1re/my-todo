@@ -1,9 +1,10 @@
 <template>
-  <Todo />
+  <component :is="$route.meta.layout || 'div'">
+    <router-view />
+  </component>
 </template>
 
 <script setup>
-import Todo from './views/Todo.vue'
 </script>
 
 <style scoped>
