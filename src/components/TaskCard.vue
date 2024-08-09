@@ -88,4 +88,14 @@ main {
         }    
     }
 }
+
+@media screen and (max-width: 850px) {
+    main {
+        .task-card {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+    }
+}
 </style>

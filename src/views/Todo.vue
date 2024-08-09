@@ -111,4 +111,27 @@ button {
     margin: 0 0.5rem;
     color: #242424;
 }
+
+@media screen and (max-width: 850px) {
+    .controls {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+
+        .all, .fav, .complete, .add-button {
+            margin-bottom: 1rem;
+        }
+    }
+
+    .add-task {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        input {
+            width: 80%;
+            margin-right: 0;
+            margin-bottom: 1rem;
+        }
+    }
+}
 </style>
