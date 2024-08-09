@@ -99,7 +99,7 @@ button:focus-visible {
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
+    color: #1a1a1a;
     background-color: #ffffff;
   }
   a:hover {
@@ -110,7 +110,7 @@ button:focus-visible {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   .card {
     form {
       width: 80%;
