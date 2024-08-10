@@ -37,7 +37,7 @@ const handleLogOut = async () => {
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 
     button {
-        background-color: red;
+        background-color: #E75559;
         color: #242424;
     }
 }

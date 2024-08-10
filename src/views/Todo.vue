@@ -65,23 +65,23 @@ onMounted(async () => {
 <style scoped>
 .controls {
     .complete {
-        background-color: green;
+        background-color: #6DCFA4;
     }
 
     .pending {
-        background-color: yellowgreen;
+        background-color: #C9CF6D;
     }
 
     .fav {
-        background-color: red;
+        background-color: #D26A73;
     }
 
     .all {
-        background-color: blue;
+        background-color: #736DCF;
     }
 
     .add-button {
-        background-color: blue;
+        background-color: #736DCF;
     }
 }
 
@@ -99,7 +99,7 @@ onMounted(async () => {
 
     button {
         padding: 0.5rem 1rem;
-        background-color: blue;
+        background-color: #736DCF;
     }
 }
 
