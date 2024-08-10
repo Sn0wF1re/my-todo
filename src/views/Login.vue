@@ -31,7 +31,8 @@ const handleLogin = async () => {
         })
 
         if (error) {
-            console.log(error.message)
+            console.log(error.message);
+            alert('Wrong email or password');
         } else {
             console.log('data:', data)
             router.push('/tasks');
