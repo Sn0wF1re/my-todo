@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
 import { supabase } from '../lib/supabaseClient';
+import { Dialog } from "quasar";
 
 export const useTaskStore = defineStore('taskStore', () => {
     const tasks = ref([]);
@@ -15,10 +16,16 @@ export const useTaskStore = defineStore('taskStore', () => {
                 user_id.value = user.id;
                 last_name.value = user.user_metadata.last_name;
             } else {
-                console.log('No user found');
+                Dialog.create({
+                    title: 'User Error',
+                    message: 'No user found',
+                });
             }
         }catch (error){
-            console.log(error);
+            Dialog.create({
+                title: 'User Error',
+                message: 'Error fetching user',
+            });
         }
     };
 
@@ -37,13 +44,22 @@ export const useTaskStore = defineStore('taskStore', () => {
                     alert('Error creating task');
                   } else {
                     fetchTasks();
-                    alert('Task created successfully');
+                    Dialog.create({
+                        title: 'Task Description',
+                        message: 'Task created successfully',
+                    });
                   }
             } else {
-                alert('Task description is too short');
+                Dialog.create({
+                    title: 'Task Description',
+                    message: 'Task description is too short',
+                });
             }
         } catch (error) {
-            console.error('Error creating task', error);
+            Dialog.create({
+                title: 'Task Error',
+                message: 'Error creating task',
+            });
         }
     };
 
@@ -56,12 +72,18 @@ export const useTaskStore = defineStore('taskStore', () => {
               .eq('user_id', user_id.value);
 
             if (error) {
-                console.error('Error fetching tasks', error);
+                Dialog.create({
+                    title: 'Task Error',
+                    message: 'Error fetching tasks',
+                });
             } else {
                 tasks.value = data;
             }
         } catch (error) {
-            console.error('Error fetching tasks', error);
+            Dialog.create({
+                title: 'Task Error',
+                message: 'Error fetching tasks',
+            });
         }
     };
 
@@ -73,10 +95,16 @@ export const useTaskStore = defineStore('taskStore', () => {
               .eq('id', id);
             if (!response.error) {
                 fetchTasks();
-                alert('Task deleted successfully');
+                Dialog.create({
+                    title: 'Task Deletion',
+                    message: 'Task deleted successfully',
+                });
             }
         } catch (error) {
-            console.error('Error deleting task', error);
+            Dialog.create({
+                title: 'Task Error',
+                message: 'Error deleting task',
+            });
         }
     };
 
@@ -89,12 +117,18 @@ export const useTaskStore = defineStore('taskStore', () => {
               .eq('id', task.id);
             
             if (error) {
-                console.error('Error toggling fav', error);
+                Dialog.create({
+                    title: 'Task Error',
+                    message: 'Error toggling fav',
+                });
             } else {
                 fetchTasks();
             }
         } catch (error) {
-            console.error('Error toggling fav', error);
+            Dialog.create({
+                title: 'Task Error',
+                message: 'Error toggling fav',
+            });
         }
     };
 
@@ -107,12 +141,18 @@ export const useTaskStore = defineStore('taskStore', () => {
               .eq('id', task.id);
             
             if (error) {
-                console.error('Error marking task as done', error);
+                Dialog.create({
+                    title: 'Task Error',
+                    message: 'Error marking task as done',
+                });
             }else {
                 fetchTasks();
             }
         } catch (error) {
-            console.error('Error marking task as done', error);
+            Dialog.create({
+                title: 'Task Error',
+                message: 'Error marking task as done',
+            });
         }
     }
 
