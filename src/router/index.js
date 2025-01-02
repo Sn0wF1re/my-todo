@@ -23,14 +23,14 @@ const router = createRouter({
       }
     },
     {
-      path: '/login',
-      name: 'login',
-      component: Login
+      path: '/register',
+      name: 'register',
+      component: Signup
     },
     {
       path: '/',
-      name: 'signup',
-      component: Signup
+      name: 'login',
+      component: Login
     },
     {
       path: '/reset',
