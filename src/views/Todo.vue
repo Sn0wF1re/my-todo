@@ -135,6 +135,12 @@ button {
 }
 
 @media screen and (max-width: 850px) {
+    .user-name {
+        h2 {
+            font-size: 1.2rem;
+        }
+    }
+
     .controls {
         display: grid;
         grid-template-columns: repeat(2, 1fr);

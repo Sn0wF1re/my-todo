@@ -45,4 +45,12 @@ const handleLogOut = async () => {
         color: #242424;
     }
 }
+
+@media (max-width: 850px) {
+    .nav {
+        h1 {
+            font-size: 1.2rem;
+        }
+    }
+}
 </style>
