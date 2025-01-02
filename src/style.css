@@ -5,7 +5,7 @@
 
   color-scheme: light;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #ffffff;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -67,6 +67,10 @@ button:focus-visible {
     padding: 2rem;
     width: 20rem;
     box-shadow: 0 0 10px 7px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 1rem;
+    }
 
     input {
         height: 2rem;
