@@ -4,7 +4,7 @@
             <h2>Reset Password</h2>
             <input type="email" id="email" v-model="email" placeholder="Your email" required>
             <button type="submit">Reset</button>
-            <router-link to="/login">Go back to login</router-link>
+            <router-link to="/">Go back to login</router-link>
         </form>
     </div>
 </template>

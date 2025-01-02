@@ -8,7 +8,7 @@
 
             <div class="alternatives">
                 <router-link to="/reset">Reset password</router-link>
-                <router-link to="/">Sign up instead</router-link>
+                <router-link to="/register">Sign up instead</router-link>
             </div>
         </form>
     </div>

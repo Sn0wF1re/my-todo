@@ -11,7 +11,7 @@
 
             <input v-model="password" type="password" placeholder="Your password" id="password">
             <button type="submit">Sign up</button>
-            <router-link to="/login">Log in instead</router-link>
+            <router-link to="/">Log in instead</router-link>
         </form>
     </div>
 </template>
@@ -46,7 +46,7 @@ const handleRegistration = async () => {
         }
         else {
             console.log('data:', data);
-            router.push('/login');
+            router.push('/');
         }
     }catch (error){
         console.log('Error encountered:', error);

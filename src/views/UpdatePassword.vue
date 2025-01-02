@@ -4,7 +4,7 @@
             <h2>Update Password</h2>
             <input type="text" id="password" v-model="newPassword" placeholder="Your new password" required>
             <button type="submit">Update</button>
-            <router-link to="/login">Go to login</router-link>
+            <router-link to="/">Go to login</router-link>
         </form>
     </div>
 </template>
@@ -28,7 +28,7 @@ const handleUpdate = async () => {
             console.log(error.message);
         } else {
             console.log('data:', data);
-            router.push('/login');
+            router.push('/');
         }
     } catch (error) {
         console.log('Error encountered while updating password:', error);
