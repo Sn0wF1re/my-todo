@@ -1,5 +1,5 @@
 <template>
-    <div class="user-">
+    <div class="user-name">
         <h2>Welcome, {{ last_name }}! Here are the controls for your tasks &#128071</h2>
     </div>
     <div class="controls">
@@ -10,10 +10,27 @@
         <button @click="setFilterType('pending')" class="pending">pending</button>
     </div>
 
-    <div class="add-task" v-if="showForm">
+    <!-- <div class="add-task" v-if="showForm">
         <input v-model="taskToAdd" type="text" placeholder="Add a task" />
         <button @click="createTask">Add task</button>
-    </div>
+    </div> -->
+
+    <q-dialog v-model="showForm">
+        <q-card style="width: 30rem; max-width: 80vw;">
+            <q-card-section>
+                <div class="text-h6">Create Task</div>
+            </q-card-section>
+
+            <q-card-section>
+                <q-input v-model="taskToAdd" label="Name" />
+            </q-card-section>
+
+            <q-card-actions align="right">
+                <q-btn flat label="Cancel" color="primary" v-close-popup />
+                <q-btn flat label="Add" color="primary" @click="createTask" />
+            </q-card-actions>
+        </q-card>
+    </q-dialog>
 
     <div class="tasks">
         <TaskCard v-for="task in filteredTasks" :task="task" :key="task.id" />
@@ -63,6 +80,11 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.user-name {
+    h2 {
+        font-size: 1.5rem;
+    }
+}
 .controls {
     .complete {
         background-color: #6DCFA4;
