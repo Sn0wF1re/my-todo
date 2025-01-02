@@ -36,6 +36,10 @@ const handleLogOut = async () => {
     margin-bottom: 2rem;
     box-shadow: 0 4px 2px -2px rgba(0, 0, 0, 0.1);
 
+    h1 {
+        font-size: 1.5rem;
+    }
+    
     button {
         background-color: #E75559;
         color: #242424;
