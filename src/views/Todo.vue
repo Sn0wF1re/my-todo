@@ -3,17 +3,12 @@
         <h2>Welcome, {{ last_name }}! Here are the controls for your tasks &#128071</h2>
     </div>
     <div class="controls">
-        <button @click="showForm=true" class="add-button">Add task</button>
+        <button @click="showForm = true" class="add-button">Add task</button>
         <button @click="setFilterType('all')" class="all">All</button>
         <button @click="setFilterType('favorites')" class="fav">Favorites</button>
         <button @click="setFilterType('completed')" class="complete">Completed</button>
-        <button @click="setFilterType('pending')" class="pending">pending</button>
+        <button @click="setFilterType('pending')" class="pending">Pending</button>
     </div>
-
-    <!-- <div class="add-task" v-if="showForm">
-        <input v-model="taskToAdd" type="text" placeholder="Add a task" />
-        <button @click="createTask">Add task</button>
-    </div> -->
 
     <q-dialog v-model="showForm">
         <q-card style="width: 30rem; max-width: 80vw;">
@@ -35,6 +30,17 @@
     <div class="tasks">
         <TaskCard v-for="task in filteredTasks" :task="task" :key="task.id" />
     </div>
+
+    <div class="pagination">
+        <q-pagination
+            v-model="currentPage"
+            :max="totalPages"
+            @update:model-value="onPageChange"
+            boundary-numbers
+            boundary-links
+            color="primary"
+        />
+    </div>
 </template>
 
 <script setup>
@@ -43,24 +49,29 @@ import { storeToRefs } from 'pinia';
 import TaskCard from '../components/TaskCard.vue';
 import { useTaskStore } from '../stores/taskStore';
 
-
+// Access the task store
 const taskStore = useTaskStore();
-const { tasks } = storeToRefs(taskStore);
+const { tasks, totalPages, currentPage, pageSize, last_name } = storeToRefs(taskStore);
+
+// Local state
 const taskToAdd = ref('');
 const showForm = ref(false);
 const filterType = ref('all');
-const { last_name } = storeToRefs(taskStore);
 
-const createTask = () => {
-    taskStore.createTask(taskToAdd.value);
+// Create a new task
+const createTask = async () => {
+    await taskStore.createTask(taskToAdd.value);
     taskToAdd.value = '';
     showForm.value = false;
+    await taskStore.getTotalPages(); // Recalculate total pages
 };
 
+// Set the filter type for tasks
 const setFilterType = (type) => {
     filterType.value = type;
 };
 
+// Filter tasks based on the selected filter type
 const filteredTasks = computed(() => {
     if (filterType.value === 'all') {
         return tasks.value;
@@ -73,9 +84,17 @@ const filteredTasks = computed(() => {
     }
 });
 
+// Handle page change
+const onPageChange = async (page) => {
+    currentPage.value = page;
+    await taskStore.fetchTasks(page, pageSize.value);
+};
+
+// Fetch tasks and total pages on component mount
 onMounted(async () => {
-    await taskStore.fetchTasks();
     await taskStore.initializeUserId();
+    await taskStore.fetchTasks(currentPage.value, pageSize.value);
+    await taskStore.getTotalPages(); // Ensure total pages are calculated
 });
 </script>
 
@@ -86,6 +105,11 @@ onMounted(async () => {
     }
 }
 .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
     .complete {
         background-color: #6DCFA4;
     }
@@ -107,59 +131,14 @@ onMounted(async () => {
     }
 }
 
-.add-task {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 2rem 0;
-
-    input {
-        padding: 0.5rem;
-        margin-right: 1rem;
-        outline: none;
-    }
-
-    button {
-        padding: 0.5rem 1rem;
-        background-color: #736DCF;
-    }
-}
-
 .tasks {
     margin-top: 2rem;
 }
 
-button {
-    margin: 0 0.5rem;
-    color: #242424;
-}
-
-@media screen and (max-width: 850px) {
-    .user-name {
-        h2 {
-            font-size: 1.2rem;
-        }
-    }
-
-    .controls {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-
-        .all, .fav, .complete, .add-button {
-            margin-bottom: 1rem;
-        }
-    }
-
-    .add-task {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        input {
-            width: 80%;
-            margin-right: 0;
-            margin-bottom: 1rem;
-        }
-    }
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
 }
 </style>

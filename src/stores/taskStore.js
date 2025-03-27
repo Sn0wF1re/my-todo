@@ -7,11 +7,38 @@ export const useTaskStore = defineStore('taskStore', () => {
     const tasks = ref([]);
     const user_id = ref(null);
     const last_name = ref(null);
+    const currentPage = ref(1);
+    const pageSize = ref(10);
+    const totalPages = ref(0);
 
-    const initializeUserId = async() => {
+    const nextPage = () => {
+        if (currentPage.value < totalPages.value) {
+            currentPage.value++;
+            fetchTasks(currentPage.value, pageSize.value);
+        } else {
+            Dialog.create({
+                title: 'Pagination Error',
+                message: 'You are already on the last page.',
+            });
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage.value > 1) {
+            currentPage.value--;
+            fetchTasks(currentPage.value, pageSize.value);
+        } else {
+            Dialog.create({
+                title: 'Pagination Error',
+                message: 'You are already on the first page.',
+            });
+        }
+    };
+
+    const initializeUserId = async () => {
         try {
             const { data: { user } } = await supabase.auth.getUser();
-    
+
             if (user) {
                 user_id.value = user.id;
                 last_name.value = user.user_metadata.last_name;
@@ -21,7 +48,7 @@ export const useTaskStore = defineStore('taskStore', () => {
                     message: 'No user found',
                 });
             }
-        }catch (error){
+        } catch (error) {
             Dialog.create({
                 title: 'User Error',
                 message: 'Error fetching user',
@@ -32,23 +59,22 @@ export const useTaskStore = defineStore('taskStore', () => {
     const createTask = async (task_description) => {
         try {
             await initializeUserId();
-            if (task_description !== '' && task_description !== null && task_description !== undefined && task_description.length > 5) {
+            if (task_description && task_description.length > 5) {
                 const { data, error } = await supabase
-                  .from('tasks')
-                  .insert(
-                      { task_description: task_description, user_id: user_id.value },
-                  )
-                  .select();
-    
-                  if (error) {
+                    .from('tasks')
+                    .insert({ task_description, user_id: user_id.value })
+                    .select();
+
+                if (error) {
                     alert('Error creating task');
-                  } else {
-                    fetchTasks();
+                } else {
+                    fetchTasks(currentPage.value, pageSize.value);
+                    await getTotalPages(); // Update total pages
                     Dialog.create({
                         title: 'Task Description',
                         message: 'Task created successfully',
                     });
-                  }
+                }
             } else {
                 Dialog.create({
                     title: 'Task Description',
@@ -63,13 +89,29 @@ export const useTaskStore = defineStore('taskStore', () => {
         }
     };
 
-    const fetchTasks = async () => {
+    const getTotalTasks = async () => {
+        const { count } = await supabase
+            .from('tasks')
+            .select('*', { count: 'exact' })
+            .eq('user_id', user_id.value);
+        return count || 0;
+    };
+
+    const getTotalPages = async () => {
+        const totalTasks = await getTotalTasks();
+        totalPages.value = Math.ceil(totalTasks / pageSize.value);
+    };
+
+    const fetchTasks = async (page = 1, pageSize = 10) => {
         try {
             await initializeUserId();
+            const from = (page - 1) * pageSize;
+            const to = from + pageSize - 1;
             const { data, error } = await supabase
-              .from('tasks')
-              .select()
-              .eq('user_id', user_id.value);
+                .from('tasks')
+                .select()
+                .eq('user_id', user_id.value)
+                .range(from, to);
 
             if (error) {
                 Dialog.create({
@@ -156,13 +198,19 @@ export const useTaskStore = defineStore('taskStore', () => {
         }
     }
 
-
     return {
         tasks,
         user_id,
         last_name,
+        currentPage,
+        pageSize,
+        totalPages,
+        nextPage,
+        prevPage,
         initializeUserId,
         createTask,
+        getTotalTasks,
+        getTotalPages,
         fetchTasks,
         deleteTask,
         toggleFav,
