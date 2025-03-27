@@ -37,8 +37,6 @@ const props = defineProps({
     task: Object
 });
 
-console.log('task', props.task);
-
 const taskStore = useTaskStore();
 
 const deleteTask = () => {
@@ -47,12 +45,10 @@ const deleteTask = () => {
 
 const toggleFavorite = () => {
     taskStore.toggleFav(props.task);
-    console.log('toggled');
 };
 
 const toggleComplete = () => {
     taskStore.toggleComplete(props.task);
-    console.log('completed toggled');
 };
 </script>
 
